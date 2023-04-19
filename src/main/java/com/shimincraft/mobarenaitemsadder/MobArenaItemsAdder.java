@@ -13,7 +13,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Set;
 
-public final class MobArena_ItemsAdder extends JavaPlugin {
+public final class MobArenaItemsAdder extends JavaPlugin {
     private MobArena mobarena;
 
     @Override
@@ -55,19 +55,16 @@ public final class MobArena_ItemsAdder extends JavaPlugin {
         ItemsAdderCreature creature = new ItemsAdderCreature(getEntityType(namespaceID), creatureKey);
         if (creature.isLivingEntity()) {
             ItemsAdderCreature.register(creatureKey, creature);
-            Bukkit.getLogger().warning(java.util.logging.Level.INFO + " Registered " + creatureKey + " with MobArena");
+            getLogger().info("Registered " + creatureKey + " with MobArena");
         }
     }
 
     private EntityType getEntityType(String namespaceID) {
         // Temporarily spawn the mob to get the EntityType
         CustomEntity customEntity = CustomEntity.spawn(namespaceID, new Location(Bukkit.getWorlds().get(0), 0, 200, 0));
-        if (customEntity != null) {
-            EntityType type = customEntity.getEntity().getType();
-            customEntity.getEntity().remove();
-            return type;
-        } else {
-            throw new IllegalArgumentException("Invalid namespaceID: " + namespaceID);
-        }
+        if (customEntity == null) throw new IllegalArgumentException("Invalid namespaceID: " + namespaceID);
+        EntityType type = customEntity.getEntity().getType();
+        customEntity.getEntity().remove();
+        return type;
     }
 }
