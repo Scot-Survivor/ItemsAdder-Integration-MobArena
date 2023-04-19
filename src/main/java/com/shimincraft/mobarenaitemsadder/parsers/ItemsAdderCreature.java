@@ -15,8 +15,7 @@ import org.bukkit.entity.LivingEntity;
 import javax.annotation.Nullable;
 
 public class ItemsAdderCreature extends MACreature {
-    private boolean isLivingEntity;
-
+    private final boolean isLivingEntity;
 
     public ItemsAdderCreature(CustomEntity entity) {
         super(entity.getType(), getCreatureKey(entity));
@@ -26,9 +25,9 @@ public class ItemsAdderCreature extends MACreature {
         } else {
             isLivingEntity = false;
             if (type == null) {
-                Bukkit.getLogger().log(java.util.logging.Level.WARNING, " Entity " + entity.getNamespacedID() + " was not found, it will not be registered.");
+                Bukkit.getLogger().warning(" Entity " + entity.getNamespacedID() + " was not found, it will not be registered.");
             } else {
-                Bukkit.getLogger().log(java.util.logging.Level.WARNING, " Entity " + entity.getNamespacedID() + " is not a LivingEntity, it will not be registered.");
+                Bukkit.getLogger().warning(" Entity " + entity.getNamespacedID() + " is not a LivingEntity, it will not be registered.");
             }
         }
     }
@@ -40,9 +39,9 @@ public class ItemsAdderCreature extends MACreature {
         } else {
             isLivingEntity = false;
             if (type == null) {
-                Bukkit.getLogger().log(java.util.logging.Level.WARNING, " Entity " + name + " was not found, it will not be registered.");
+                Bukkit.getLogger().warning(" Entity " + name + " was not found, it will not be registered.");
             } else {
-                Bukkit.getLogger().log(java.util.logging.Level.WARNING, " Entity " + name + " is not a LivingEntity, it will not be registered.");
+                Bukkit.getLogger().warning(" Entity " + name + " is not a LivingEntity, it will not be registered.");
             }
         }
     }
@@ -63,17 +62,14 @@ public class ItemsAdderCreature extends MACreature {
     public LivingEntity spawn(Arena arena, World world, Location loc) {
         loc.setWorld(world);
         CustomEntity customEntity = CustomEntity.spawn(this.getName().replace("itemsadder:", ""), loc);
-        if (customEntity != null) {
-            Entity entity = customEntity.getEntity();
+        if (customEntity == null) return null;
 
-            if (entity instanceof Creature c) {
-                c.setTarget(WaveUtils.getClosestPlayer(arena, entity));
-            }
-
-            return (LivingEntity) entity;
-        } else {
-            return null;
+        Entity entity = customEntity.getEntity();
+        if (entity instanceof Creature c) {
+            c.setTarget(WaveUtils.getClosestPlayer(arena, entity));
         }
+
+        return (LivingEntity) entity;
     }
 
     /**

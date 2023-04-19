@@ -12,11 +12,7 @@ public class ItemsAdderItemStackParser implements ItemStackParser {
         // Remove prefix
         s = s.replace("itemsadder:", "");
         CustomStack customStack = CustomStack.getInstance(s);
-        if (customStack != null) {
-            return customStack.getItemStack();
-        } else {
-            // If the item is not an items adder item found, return null
-            return null;
-        }
+        if (customStack == null) return null;
+        return customStack.getItemStack();
     }
 }
