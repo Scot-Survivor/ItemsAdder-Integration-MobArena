@@ -16,12 +16,18 @@ import java.util.Set;
 public final class MobArenaItemsAdder extends JavaPlugin {
     private MobArena mobarena;
 
+
+    @Override
+    public void onEnable() {
+        // Plugin startup logic
+        registerParsers();
+        registerMobs();
+    }
+
     @Override
     public void onLoad() {
         // Plugin startup logic
         setupMobArena();
-        registerParsers();
-        registerMobs();
     }
 
     @Override
