@@ -2,4 +2,5 @@ name: MobArena-ItemsAdder
 version: '${version}'
 main: com.shimincraft.mobarenaitemsadder.MobArenaItemsAdder
 api-version: 1.19
-softdepend: [ItemsAdder, MobArena]
+load: STARTUP
+depend: [ItemsAdder, MobArena]

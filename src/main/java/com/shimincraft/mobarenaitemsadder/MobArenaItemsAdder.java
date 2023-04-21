@@ -2,6 +2,7 @@ package com.shimincraft.mobarenaitemsadder;
 
 import com.garbagemule.MobArena.MobArena;
 import com.garbagemule.MobArena.things.ItemStackParser;
+import com.shimincraft.mobarenaitemsadder.listeners.ItemsAdderLoad;
 import com.shimincraft.mobarenaitemsadder.parsers.ItemsAdderItemStackParser;
 import com.shimincraft.mobarenaitemsadder.parsers.ItemsAdderCreature;
 import dev.lone.itemsadder.api.CustomEntity;
@@ -16,12 +17,10 @@ import java.util.Set;
 public final class MobArenaItemsAdder extends JavaPlugin {
     private MobArena mobarena;
 
-
     @Override
     public void onEnable() {
         // Plugin startup logic
-        registerParsers();
-        registerMobs();
+        getServer().getPluginManager().registerEvents(new ItemsAdderLoad(this), this);
     }
 
     @Override
@@ -33,6 +32,12 @@ public final class MobArenaItemsAdder extends JavaPlugin {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
+    }
+
+    public void reload() {
+        registerParsers();
+        registerMobs();
+        mobarena.reloadConfig();
     }
 
     private void setupMobArena() {
