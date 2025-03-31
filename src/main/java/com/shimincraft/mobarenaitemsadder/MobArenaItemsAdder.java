@@ -62,6 +62,10 @@ public final class MobArenaItemsAdder extends JavaPlugin {
     }
 
     private void registerMob(String namespaceID) {
+        if (namespaceID.equals("_iainternal:player")) {
+            getLogger().warning("Skipping _iainternal:player due to registration errors.");
+            return; // Skip this entity
+        }
         String creatureKey = ItemsAdderCreature.getCreatureKey(namespaceID);
         ItemsAdderCreature creature = new ItemsAdderCreature(getEntityType(namespaceID), creatureKey);
         if (creature.isLivingEntity()) {
